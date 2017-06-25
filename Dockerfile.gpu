@@ -230,8 +230,14 @@ RUN luarocks install nn && \
 #	make install && \
 #	ldconfig && \
 #	echo 'ln /dev/null /dev/raw1394' >> ~/.bashrc
-RUN sudo apt-get install libopencv-dev python-opencv
 
+RUN apt-get update && apt-get install -y \
+	libopencv-dev \
+	python-opencv \
+	&& \
+	apt-get clean && \
+	apt-get autoremove && \
+	rm -rf /var/lib/apt/lists/*
 
 # Set up notebook config
 COPY jupyter_notebook_config.py /root/.jupyter/
